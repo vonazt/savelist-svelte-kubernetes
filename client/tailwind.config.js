@@ -5,7 +5,9 @@ module.exports = {
   },
   purge: ["./src/**/*.svelte"],
   theme: {
-    extend: {},
+    extend: {
+      colors: { spotifyGreen: `#1db954;` },
+    },
   },
   variants: {},
   plugins: [],

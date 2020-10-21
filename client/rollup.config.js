@@ -59,11 +59,12 @@ export default {
     // consult the documentation for details:
     // https://github.com/rollup/plugins/tree/master/packages/commonjs
 
-    commonjs(),
     typescript({
       sourceMap: !production,
       inlineSources: !production,
     }),
+    commonjs(),
+
     resolve({
       browser: true,
       dedupe: ["svelte"],

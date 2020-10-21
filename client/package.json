@@ -29,8 +29,10 @@
     "@apollo/client": "^3.2.5",
     "graphql": "^15.3.0",
     "postcss-cli": "^8.1.0",
+    "qs": "^6.9.4",
     "sirv-cli": "^1.0.0",
     "svelte-apollo": "^0.4.0",
+    "svelte-routing": "^1.4.2",
     "tailwindcss": "^1.9.5",
     "yarn-run-all": "^3.1.1"
   }

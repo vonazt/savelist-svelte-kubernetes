@@ -9,7 +9,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-const httpLink = createHttpLink({ uri: `http://localhost:4000/graphql` });
+const httpLink = createHttpLink({ uri: `http://localhost:8000/graphql` });
 
 const authLink = setContext((_, { headers }) => {
   const accessToken = localStorage.getItem(`accessToken`);
@@ -32,7 +32,9 @@ const afterWare = new ApolloLink((operation: Operation, forward: NextLink) => {
   });
 });
 
-export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   link: afterWare.concat(authLink.concat(httpLink)),
   cache: new InMemoryCache(),
 });
+
+export default client;
