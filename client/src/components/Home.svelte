@@ -8,8 +8,6 @@
 
   let loggedIn;
 
-
-  console.log('things ssdsds', loggedIn)
   loggedInStore.subscribe((store) => {
     loggedIn = store.loggedIn;
   });
@@ -21,11 +19,14 @@
 
   const playlistsQuery = query(LIST_PLAYLISTS);
 
-  if (loggedIn) {
-    
-    playlistsQuery.refetch();
-  }
-  console.log('play lists state,')
+  $: playlistsData = {
+    allPlaylists: $playlistsQuery.data?.listPlaylists,
+    filteredPlaylists: $playlistsQuery.data?.listPlaylists,
+    offsetPlaylists: $playlistsQuery.data?.listPlaylists.slice(0, 12)
+  };
+
+  $: console.log("play lists data", playlistsData);
+
 </script>
 
 <div class="container mx-auto mb-8">
@@ -54,8 +55,9 @@
         {/each}
       </div>
     {/if}
-    {:else} {#each $playlistsQuery.data as playlist }
-    <h1>{playlist.name}</h1>
+  {:else}
+    {#each playlistsData.allPlaylists as playlist}
+      <h1>{playlist.name}</h1>
     {/each}
   {/if}
   <!-- {isLoggingIn || (isLoggedIn && loading) ? (
