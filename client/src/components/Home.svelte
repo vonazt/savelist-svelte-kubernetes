@@ -1,11 +1,15 @@
 <script>
+  import { from } from "@apollo/client";
   import { loggedInStore } from "../auth/authStore";
   import { query } from "svelte-apollo";
   import { LIST_PLAYLISTS } from "../gql";
   import LoginLink from "../auth/LoginLink.svelte";
+  import { LoadingSkeleton } from "./Loading";
 
   let loggedIn;
 
+
+  console.log('things ssdsds', loggedIn)
   loggedInStore.subscribe((store) => {
     loggedIn = store.loggedIn;
   });
@@ -14,17 +18,14 @@
     loggedInStore.update(() => ({
       loggedIn: true,
     }));
-  console.log("logged in", loggedIn);
 
-  // let playlists = [];
+  const playlistsQuery = query(LIST_PLAYLISTS);
 
-  // if (loggedIn) {
-  // }
-
-  query(LIST_PLAYLISTS);
-
-  // query(LIST_PLAYLISTS)
-  //   console.log('playlists are', playlists.data)
+  if (loggedIn) {
+    
+    playlistsQuery.refetch();
+  }
+  console.log('play lists state,')
 </script>
 
 <div class="container mx-auto mb-8">
@@ -37,24 +38,27 @@
   {#if !loggedIn}
     <LoginLink />
   {/if}
-  <!-- {#if loggedIn && loading} -->
-  <!-- {isLoggingIn || (isLoggedIn && loading) ? (
-    window.innerWidth <= 640 ? (
+  {#if loggedIn && $playlistsQuery.loading}
+    {#if window.innerWidth <= 640}
       <LoadingSkeleton />
-    ) : window.innerWidth <= 768 ? (
+    {:else if window.innerWidth <= 768}
       <div class="grid gap-4 grid-cols-2 grid-rows-2">
-        {Array.from(Array(4), (_, i) => (
-          <LoadingSkeleton key={i} />
-        ))}
+        {#each Array.from(Array(4)) as _}
+          <LoadingSkeleton />
+        {/each}
       </div>
-    ) : (
+    {:else}
       <div class="grid gap-4 grid-cols-3 grid-rows-3">
-        {Array.from(Array(6), (_, i) => (
-          <LoadingSkeleton key={i} />
-        ))}
+        {#each Array.from(Array(6)) as _}
+          <LoadingSkeleton />
+        {/each}
       </div>
-    )
-  ) : (
+    {/if}
+    {:else} {#each $playlistsQuery.data as playlist }
+    <h1>{playlist.name}</h1>
+    {/each}
+  {/if}
+  <!-- {isLoggingIn || (isLoggedIn && loading) ? (
     isLoggedIn && (
       <Fragment>
         <Search
