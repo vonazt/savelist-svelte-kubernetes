@@ -22,11 +22,10 @@
   $: playlistsData = {
     allPlaylists: $playlistsQuery.data?.listPlaylists,
     filteredPlaylists: $playlistsQuery.data?.listPlaylists,
-    offsetPlaylists: $playlistsQuery.data?.listPlaylists.slice(0, 12)
+    offsetPlaylists: $playlistsQuery.data?.listPlaylists.slice(0, 12),
   };
 
   $: console.log("play lists data", playlistsData);
-
 </script>
 
 <div class="container mx-auto mb-8">
@@ -38,8 +37,7 @@
   </h2>
   {#if !loggedIn}
     <LoginLink />
-  {/if}
-  {#if loggedIn && $playlistsQuery.loading}
+  {:else if loggedIn && $playlistsQuery.loading}
     {#if window.innerWidth <= 640}
       <LoadingSkeleton />
     {:else if window.innerWidth <= 768}

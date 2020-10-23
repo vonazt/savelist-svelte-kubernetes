@@ -6,6 +6,7 @@
   onMount(() => {
     const accessToken = new URL(document.location).searchParams.get(`access_token`);
     localStorage.setItem(`accessToken`, accessToken);
+    
     navigate(`/`);
   });
 </script>
