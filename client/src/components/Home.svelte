@@ -1,5 +1,7 @@
 <script>
   import { loggedInStore } from "../auth/authStore";
+  import { query } from "svelte-apollo";
+  import { LIST_PLAYLISTS } from "../gql";
   import LoginLink from "../auth/LoginLink.svelte";
 
   let loggedIn;
@@ -7,12 +9,22 @@
   loggedInStore.subscribe((store) => {
     loggedIn = store.loggedIn;
   });
- 
+
   if (localStorage.getItem(`accessToken`))
     loggedInStore.update(() => ({
       loggedIn: true,
     }));
-    console.log('logged in', loggedIn)
+  console.log("logged in", loggedIn);
+
+  // let playlists = [];
+
+  // if (loggedIn) {
+  // }
+
+  query(LIST_PLAYLISTS);
+
+  // query(LIST_PLAYLISTS)
+  //   console.log('playlists are', playlists.data)
 </script>
 
 <div class="container mx-auto mb-8">
@@ -25,6 +37,7 @@
   {#if !loggedIn}
     <LoginLink />
   {/if}
+  <!-- {#if loggedIn && loading} -->
   <!-- {isLoggingIn || (isLoggedIn && loading) ? (
     window.innerWidth <= 640 ? (
       <LoadingSkeleton />
