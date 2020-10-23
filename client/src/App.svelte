@@ -8,6 +8,6 @@
 </script>
 
 <Router>
-  <Route path="/login_callback" component={LoginCallback} />
+  <Route path="/callback" component={LoginCallback} />
   <Route path="/" component={Home} />
 </Router>

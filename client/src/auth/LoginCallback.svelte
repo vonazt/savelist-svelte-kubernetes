@@ -1,35 +1,17 @@
 <script>
-  import qs, { ParsedQs } from "qs";
+  import { onMount } from "svelte";
+
   import { navigate } from "svelte-routing";
-
-  const searchParams = new URLSearchParams(window.location.search);
-
   let accessTokenSet = false;
 
-  $: {
-    const { access_token } = qs.parse(searchParams, {
-      ignoreQueryPrefix: true,
-    });
-    localStorage.setItem(`accessToken`, access_token);
+  onMount(() => {
+    const accessToken = new URL(document.location).searchParams.get(`code`);
+    localStorage.setItem(`accessToken`, accessToken);
     accessTokenSet = true;
-  }
+    navigate(`/`);
+  });
 </script>
 
-<!-- const { search } = useLocation();
-  const [isAccessTokenSet, setIsAccessTokensSet] = useState<boolean>(false);
-
-  useEffect(() => {
-    const { access_token }: ParsedQs = qs.parse(search, {
-      ignoreQueryPrefix: true,
-    });
-    localStorage.setItem(`accessToken`, access_token as string);
-    setIsAccessTokensSet(true);
-  }, [search]); -->
-
-{#if accessTokenSet}
-  {navigate(`/`)}
-{:else}
+{#if !accessTokenSet}
   <h1>Logging in</h1>
 {/if}
-
-<!-- isAccessTokenSet ? <Redirect to={`/`} /> : <h1>Logging in</h1>; -->

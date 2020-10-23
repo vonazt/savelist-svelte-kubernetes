@@ -2,17 +2,17 @@
   import { loggedInStore } from "../auth/authStore";
   import LoginLink from "../auth/LoginLink.svelte";
 
-  let isLoggedIn;
-  let isLoggingIn;
+  let loggedIn;
 
   loggedInStore.subscribe((store) => {
-    console.log("store is", store);
-    isLoggedIn = store.isLoggedIn;
-    isLoggingIn = store.isLoggingIn;
+    loggedIn = store.loggedIn;
   });
-
-  console.log("logged in store", isLoggedIn);
-  console.log("is logging in", isLoggingIn);
+ 
+  if (localStorage.getItem(`accessToken`))
+    loggedInStore.update(() => ({
+      loggedIn: true,
+    }));
+    console.log('logged in', loggedIn)
 </script>
 
 <div class="container mx-auto mb-8">
@@ -22,7 +22,7 @@
   <h2 class="lg:text-xl text-center mb-5 italic text-gray-600 font-bold">
     Save your Spotify playlists as .csv files
   </h2>
-  {#if !isLoggedIn && !isLoggingIn}
+  {#if !loggedIn}
     <LoginLink />
   {/if}
   <!-- {isLoggingIn || (isLoggedIn && loading) ? (

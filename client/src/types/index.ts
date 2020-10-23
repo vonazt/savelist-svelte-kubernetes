@@ -1,4 +1,3 @@
 export type LoggedInStore = {
-  isLoggedIn: boolean;
-  isLoggingIn: boolean;
+  loggedIn: boolean;
 };
