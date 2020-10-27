@@ -1,3 +1,3 @@
-import LoadingSkeleton from "./LoadingSkeleton.svelte";
+import LoadingScreens from "./LoadingScreens.svelte";
 
-export { LoadingSkeleton };
+export { LoadingScreens };
