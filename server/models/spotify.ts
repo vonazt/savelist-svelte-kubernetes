@@ -109,3 +109,10 @@ export interface IBulkWrite {
   modifiedCount: number;
   matchedCount: number;
 }
+
+export type FormattedPlaylist = {
+  track: string;
+  album: string;
+  artists: string[];
+  spotifyId: string;
+};

@@ -1,11 +1,9 @@
 <script lang="ts">
   import type { SpotifyImage } from "../../types";
-
   export let images: SpotifyImage[];
   export let openSpotifyUrl: string;
 
- let isShowPlayIcon: boolean = false;
-
+  let isShowPlayIcon: boolean = false;
 </script>
 
 <div class="flex content-center justify-center relative">
@@ -15,10 +13,9 @@
       target="_blank"
       rel="noopener noreferrer"
       class={`absolute self-center z-10 border-2 ${window.innerWidth <= 1024 ? `p-6` : `p-8`} rounded-full bg-black bg-opacity-50`}
-      on:mouse-enter={() => isShowPlayIcon = true}
-      on:mouse-leave={() => isShowPlayIcon = false}>
-      <i
-        class="fas faPlay" />
+      on:mouse-enter={() => (isShowPlayIcon = true)}
+      on:mouse-leave={() => (isShowPlayIcon = false)}>
+      <!-- <i class="fas fa-play" /> -->
     </a>
   {:else}
     <a
@@ -26,8 +23,8 @@
       target="_blank"
       rel="noopener noreferrer"
       class={`text-transparent rounded bg-no-repeat bg-center bg-cover w-48 h-48 my-2`}
-      on:mouse-enter={() => isShowPlayIcon = true}
-      on:mouse-leaveonMouseLeave={() => isShowPlayIcon = false}>
+      on:mouse-enter={() => (isShowPlayIcon = true)}
+      on:mouse-leaveonMouseLeave={() => (isShowPlayIcon = false)}>
       Link to Spotify playlist
     </a>
   {/if}

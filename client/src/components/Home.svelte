@@ -48,7 +48,6 @@
   {/if}
 </div>
 
-//
 <!-- {isLoggingIn || (isLoggedIn && loading) ? (
 //   isLoggedIn && (
 //       <Fragment>

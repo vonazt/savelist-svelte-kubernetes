@@ -1,5 +1,6 @@
 import { repository } from '../repositories';
-import { ISpotifyTrack, SpotifyPlaylist } from '../models';
+import { ISpotifyTrack, SpotifyPlaylist, FormattedPlaylist } from '../models';
+import { Parser } from 'json2csv';
 
 export const savePlaylist = async (
   id: string,
@@ -16,12 +17,23 @@ export const savePlaylist = async (
   const formattedTracks = playlistTracks.map(
     ({ track: { name, album, artists, id } }: ISpotifyTrack) => ({
       track: name,
-      album: album.name,  
+      album: album.name,
       artists: artists.map(({ name }) => name),
       spotifyId: id,
     }),
   );
-  return JSON.stringify(formattedTracks);
+
+  const json2csvParser = new Parser();
+  const playlistCsv = json2csvParser.parse(
+    formattedTracks.map((playlist: FormattedPlaylist) => ({
+      ...playlist,
+      artists: playlist.artists.join(`, `),
+    })),
+  );
+
+  const buff = Buffer.from(playlistCsv);
+  const buffed = buff.toString(`base64`);
+  return buffed;
 };
 
 export const listCollectiblesPlaylist = repository.listCollectiblesPlaylist;

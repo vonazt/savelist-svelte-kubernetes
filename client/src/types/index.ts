@@ -45,12 +45,6 @@ export type SpotifyPlaylist = {
   uri: string;
 };
 
-export type FormattedPlaylist = {
-  track: string;
-  album: string;
-  artists: string[];
-  spotifyId: string;
-};
 
 
 export type SavedPlaylist = {
